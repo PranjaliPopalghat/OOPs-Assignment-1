@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+class Book {
+private:
+    int classMark;
+    string title;
+    string author;
+    bool isLoaned;
+    bool isReserved;
+public:
+    Book(int mark, string t, string a) : classMark(mark), title(t), author(a), isLoaned(false), isReserved(false) {}
+   void checkout() {
+        if (!isLoaned) {
+            isLoaned = true;
+            cout << "Book '" << title << "' checked out successfully!" << endl;
+        } else {
+            cout << "Book '" << title << "' is already on loan!" << endl;
+        }
+    }
+    void reserve() {
+        if (isLoaned && !isReserved) {
+            isReserved = true;
+            cout << "Book '" << title << "' reserved successfully!" << endl;
+        } else if (!isLoaned) {
+            cout << "Book '" << title << "' is available, no need to reserve!" << endl;
+        } else {
+            cout << "Book '" << title << "' is already reserved!" << endl;
+        }
+    }
+    void inquire() {
+        cout << "Title: " << title << "\nAuthor: " << author << "\nClass Mark: " << classMark;
+        cout << "\nStatus: " << (isLoaned ? "On Loan" : "Available") << (isReserved ? " (Reserved)" : "") << endl;
+    }
+    bool isAvailable() { return !isLoaned; }
+    bool isOnLoan() { return isLoaned; }
+    bool isBookReserved() { return isReserved; }
+};
+class Library {
+private:
+    vector<Book> books;
+    int totalBooks, loanedBooks, reservedBooks;
+public:
+    Library() : totalBooks(0), loanedBooks(0), reservedBooks(0) {}
+    void addBook(int mark, string title, string author) {
+        books.push_back(Book(mark, title, author));
+        totalBooks++;
+    }
+    void checkoutBook(int mark) {
+        for (auto &book : books) {
+            if (book.isAvailable() && book.isOnLoan() == false) {
+                book.checkout();
+                loanedBooks++;
+                return;
+            }
+        }
+        cout << "Book with class mark " << mark << " not available for checkout!" << endl;
+    }
+    void reserveBook(int mark) {
+        for (auto &book : books) {
+            if (book.isOnLoan() && !book.isBookReserved()) {
+                book.reserve();
+                reservedBooks++;
+                return;
+            }
+        }
+        cout << "Book with class mark " << mark << " cannot be reserved!" << endl;
+    }
+    void inquireBook(int mark) {
+        for (auto &book : books) {
+            if (book.isAvailable() || book.isOnLoan()) {
+                book.inquire();
+                return;
+            }
+        }
+        cout << "Book with class mark " << mark << " not found!" << endl;
+    }
+
+    void displaySummary() {
+        cout << "\nLibrary Summary:\n";
+        cout << "Total Books: " << totalBooks << "\nBooks on Loan: " << loanedBooks;
+        cout << "\nBooks Reserved: " << reservedBooks << "\nBooks on Shelves: " << (totalBooks - loanedBooks) << endl;
+    }
+};
+int main() {
+    Library lib;
+    lib.addBook(101, "C++ Programming", "Bjarne Stroustrup");
+    lib.addBook(102, "Data Structures", "Mark Weiss");
+    lib.addBook(103, "Operating Systems", "Andrew Tanenbaum");
+
+    lib.checkoutBook(101);
+    lib.reserveBook(101);
+    lib.inquireBook(102);
+    lib.displaySummary();
+
+    return 0;
+}
