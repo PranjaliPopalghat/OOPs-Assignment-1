@@ -1,0 +1,82 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Marks {
+protected:
+    static int rollCounter; // Auto-increment roll number
+    int rollNumber;
+    string name;
+    int marks;
+
+public:
+    Marks(string n, int m) : name(n), marks(m) {
+        rollNumber = ++rollCounter;
+    }
+
+    int getMarks() const { return marks; }
+    void display() const {
+        cout << "Roll Number: " << rollNumber << "\nName: " << name << "\nMarks: " << marks << endl;
+    }
+};
+
+int Marks::rollCounter = 0; // Initialize static variable
+
+class Physics : public Marks {
+public:
+    Physics(string n, int m) : Marks(n, m) {}
+};
+
+class Chemistry : public Marks {
+public:
+    Chemistry(string n, int m) : Marks(n, m) {}
+};
+
+class Mathematics : public Marks {
+public:
+    Mathematics(string n, int m) : Marks(n, m) {}
+};
+
+int main() {
+    int numStudents;
+    cout << "Enter number of students: ";
+    cin >> numStudents;
+
+    vector<Physics> physicsStudents;
+    vector<Chemistry> chemistryStudents;
+    vector<Mathematics> mathStudents;
+
+    int totalMarks = 0;
+
+    for (int i = 0; i < numStudents; i++) {
+        string name;
+        int pMarks, cMarks, mMarks;
+
+        cout << "Enter name of student " << i + 1 << ": ";
+        cin >> name;
+        cout << "Enter Physics marks: ";
+        cin >> pMarks;
+        cout << "Enter Chemistry marks: ";
+        cin >> cMarks;
+        cout << "Enter Mathematics marks: ";
+        cin >> mMarks;
+
+        physicsStudents.emplace_back(name, pMarks);
+        chemistryStudents.emplace_back(name, cMarks);
+        mathStudents.emplace_back(name, mMarks);
+
+        totalMarks += pMarks + cMarks + mMarks;
+    }
+
+    cout << "\nStudent Details:\n";
+    for (int i = 0; i < numStudents; i++) {
+        physicsStudents[i].display();
+        chemistryStudents[i].display();
+        mathStudents[i].display();
+        cout << "----------------------\n";
+    }
+
+    cout << "Class Average Marks: " << totalMarks / (numStudents * 3) << endl;
+
+    return 0;
+}
