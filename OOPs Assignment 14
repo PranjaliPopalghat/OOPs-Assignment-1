@@ -1,0 +1,135 @@
+#include <iostream>
+using namespace std;
+
+class Vehicle {
+protected:
+    float mileage;
+    float price;
+public:
+    void setVehicle(float m, float p) {
+        mileage = m;
+        price = p;
+    }
+    void displayVehicle() {
+        cout << "Mileage: " << mileage << " km/l\nPrice: $" << price << endl;
+    }
+};
+
+class Car : public Vehicle {
+protected:
+    float ownershipCost;
+    int warranty;
+    int seatingCapacity;
+    string fuelType;
+public:
+    void setCar(float oc, int w, int sc, string ft) {
+        ownershipCost = oc;
+        warranty = w;
+        seatingCapacity = sc;
+        fuelType = ft;
+    }
+    void displayCar() {
+        displayVehicle();
+        cout << "Ownership Cost: $" << ownershipCost << "\nWarranty: " << warranty << " years"
+             << "\nSeating Capacity: " << seatingCapacity << "\nFuel Type: " << fuelType << endl;
+    }
+};
+
+class Bike : public Vehicle {
+protected:
+    int numCylinders;
+    int numGears;
+    string coolingType;
+    string wheelType;
+    float fuelTankSize;
+public:
+    void setBike(int nc, int ng, string ct, string wt, float fts) {
+        numCylinders = nc;
+        numGears = ng;
+        coolingType = ct;
+        wheelType = wt;
+        fuelTankSize = fts;
+    }
+    void displayBike() {
+        displayVehicle();
+        cout << "Cylinders: " << numCylinders << "\nGears: " << numGears
+             << "\nCooling Type: " << coolingType << "\nWheel Type: " << wheelType
+             << "\nFuel Tank Size: " << fuelTankSize << " inches" << endl;
+    }
+};
+
+class Audi : public Car {
+private:
+    string modelType;
+public:
+    void setAudi(string mt) { modelType = mt; }
+    void displayAudi() {
+        cout << "Model: " << modelType << endl;
+        displayCar();
+    }
+};
+
+class Ford : public Car {
+private:
+    string modelType;
+public:
+    void setFord(string mt) { modelType = mt; }
+    void displayFord() {
+        cout << "Model: " << modelType << endl;
+        displayCar();
+    }
+};
+
+class Bajaj : public Bike {
+private:
+    string makeType;
+public:
+    void setBajaj(string mt) { makeType = mt; }
+    void displayBajaj() {
+        cout << "Make Type: " << makeType << endl;
+        displayBike();
+    }
+};
+
+class TVS : public Bike {
+private:
+    string makeType;
+public:
+    void setTVS(string mt) { makeType = mt; }
+    void displayTVS() {
+        cout << "Make Type: " << makeType << endl;
+        displayBike();
+    }
+};
+
+int main() {
+    Audi audiCar;
+    audiCar.setVehicle(15, 50000);
+    audiCar.setCar(3000, 5, 5, "Petrol");
+    audiCar.setAudi("Audi A6");
+    cout << "\nAudi Car Details:\n";
+    audiCar.displayAudi();
+
+    Ford fordCar;
+    fordCar.setVehicle(12, 40000);
+    fordCar.setCar(2500, 4, 5, "Diesel");
+    fordCar.setFord("Ford Mustang");
+    cout << "\nFord Car Details:\n";
+    fordCar.displayFord();
+
+    Bajaj bajajBike;
+    bajajBike.setVehicle(40, 1500);
+    bajajBike.setBike(2, 5, "Air", "Alloys", 12);
+    bajajBike.setBajaj("Bajaj Pulsar");
+    cout << "\nBajaj Bike Details:\n";
+    bajajBike.displayBajaj();
+
+    TVS tvsBike;
+    tvsBike.setVehicle(45, 1200);
+    tvsBike.setBike(1, 4, "Liquid", "Spokes", 10);
+    tvsBike.setTVS("TVS Apache");
+    cout << "\nTVS Bike Details:\n";
+    tvsBike.displayTVS();
+
+    return 0;
+}
