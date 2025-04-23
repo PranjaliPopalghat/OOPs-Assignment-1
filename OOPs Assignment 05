@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Books {
+private:
+    char *title;
+    char *author;
+    double price;
+    int stock;
+
+public:
+    Books(const char *t, const char *a, double p, int s) {
+        title = new char[strlen(t) + 1];
+        strcpy(title, t);
+        author = new char[strlen(a) + 1];
+        strcpy(author, a);
+        price = p;
+        stock = s;
+    }
+    ~Books() {
+        delete[] title;
+        delete[] author;
+    }
+
+    bool isAvailable(const char *t, const char *a) {
+        return (strcmp(title, t) == 0 && strcmp(author, a) == 0);
+    }
+
+  
+    void display() {
+        cout << "Title: " << title << "\nAuthor: " << author
+             << "\nPrice: $" << price << "\nStock: " << stock << endl;
+    }
+
+    
+    void sell(int copies) {
+        if (copies <= stock) {
+            cout << "Total cost: $" << (copies * price) << endl;
+            stock -= copies;
+        } else {
+            cout << "Required copies not in stock!" << endl;
+        }
+    }
+};
+
+int main() {
+    Books book1("C++ Programming", "Bjarne Stroustrup", 45.99, 10);
+    Books book2("Data Structures", "Mark Weiss", 39.99, 5);
+
+    char searchTitle[50], searchAuthor[50];
+    cout << "Enter book title: ";
+    cin.getline(searchTitle, 50);
+    cout << "Enter author name: ";
+    cin.getline(searchAuthor, 50);
+
+    if (book1.isAvailable(searchTitle, searchAuthor)) {
+        book1.display();
+        int copies;
+        cout << "Enter number of copies required: ";
+        cin >> copies;
+        book1.sell(copies);
+    } else if (book2.isAvailable(searchTitle, searchAuthor)) {
+        book2.display();
+        int copies;
+        cout << "Enter number of copies required: ";
+        cin >> copies;
+        book2.sell(copies);
+    } else {
+        cout << "Book not available!" << endl;
+    }
+
+    return 0;
+}
