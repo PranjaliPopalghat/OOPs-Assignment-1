@@ -1,0 +1,40 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+class Employee {
+private:
+    int age;
+    int yearsOfService;
+    double salary;
+public:
+    Employee() : age(0), yearsOfService(0), salary(0.0) {}
+    Employee(int a, int y, double s) : age(a), yearsOfService(y), salary(s) {}
+    int getAge() const { return age; }
+    int getYearsOfService() const { return yearsOfService; }
+    double getSalary() const { return salary; }
+    void setAge(int a) { age = a; }
+    void setYearsOfService(int y) { yearsOfService = y; }
+    void setSalary(double s) { salary = s; }
+    int getRoundedSalary() const { return round(salary / 1000) * 1000;
+}
+    void display() const {
+        cout << "Age: " << age << "\nYears of Service: " << yearsOfService
+             << "\nSalary: $" << salary << "\nRounded Salary: $" << getRoundedSalary() << endl;
+    }
+};
+int main() {
+    Employee emp1; 
+    Employee emp2(30, 5, 45000);  
+    emp1.setAge(25);
+    emp1.setYearsOfService(3);
+    emp1.setSalary(32000);
+    cout << "Employee 1:\n";
+    emp1.display()
+    cout << "\nEmployee 2:\n";
+    emp2.display();
+    emp1 = emp2;
+    cout << "\nAfter assignment:\n";
+    emp1.display();
+
+    return 0;
+}
