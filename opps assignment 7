@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+class SimpleCircle {
+private:
+    int itsRadius;
+
+public:
+    SimpleCircle() { itsRadius = 5; }
+    SimpleCircle(int r) { itsRadius = r; }
+    SimpleCircle(const SimpleCircle &c) { itsRadius = c.itsRadius; }
+    ~SimpleCircle() { cout << "Destructor called for radius: " << itsRadius << endl; }
+
+    int getRadius() const { return itsRadius; }
+    void setRadius(int r) { itsRadius = r; }
+
+    SimpleCircle& operator=(const SimpleCircle &c) {
+        if (this != &c) {
+            itsRadius = c.itsRadius;
+        }
+        return *this;
+    }
+    SimpleCircle& operator++() {
+        ++itsRadius;
+        return *this;
+    }
+    SimpleCircle operator++(int) {
+        SimpleCircle temp = *this;
+        itsRadius++;
+        return temp;
+    }
+    void display() const { cout << "Circle Radius: " << itsRadius << endl; }
+};
+int main() {
+    SimpleCircle circle1;  
+    SimpleCircle circle2(9);  
+
+    ++circle1;  
+    circle2++; 
+
+    cout << "After incrementing:" << endl;
+    circle1.display();
+    circle2.display();
+    circle1 = circle2;
+    cout << "After assignment:" << endl;
+    circle1.display();
+
+    return 0;
+}
