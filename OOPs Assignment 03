@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+class Staff {
+protected:
+    int code;
+    string name;
+public:
+    void initialize(int c, string n) {
+        code = c;
+        name = n;
+    }
+    void display() {
+        cout << "Employee Name: " << name << "\nEmployee Code: " << code << endl;
+    }
+};
+
+class Teacher : public Staff {
+private:
+    string subject, publication;
+public:
+    void initializeTeacher(int c, string n, string subj, string pub) {
+        initialize(c, n);
+        subject = subj;
+        publication = pub;
+    }
+    void display() {
+        Staff::display();
+        cout << "Subject: " << subject << "\nPublication: " << publication << endl;
+    }
+};
+
+class Officer : public Staff {
+private:
+    string grade;
+public:
+    void initializeOfficer(int c, string n, string gr) {
+        initialize(c, n);
+        grade = gr;
+    }
+    void display() {
+        Staff::display();
+        cout << "Grade: " << grade << endl;
+    }
+};
+
+class Typist : public Staff {
+protected:
+    int speed;
+public:
+    void initializeTypist(int c, string n, int s) {
+        initialize(c, n);
+        speed = s;
+    }
+    void display() {
+        Staff::display();
+        cout << "Typing Speed: " << speed << " words per minute" << endl;
+    }
+};
+
+class Regular : public Typist {
+public:
+    void display() {
+        Typist::display();
+        cout << "Regular Typist" << endl;
+    }
+};
+
+class Casual : public Typist {
+private:
+    int dailyWages;
+public:
+    void initializeCasual(int c, string n, int s, int wages) {
+        initializeTypist(c, n, s);
+        dailyWages = wages;
+    }
+    void display() {
+        Typist::display();
+        cout << "Daily Wages: $" << dailyWages << endl;
+    }
+};
+
+int main() {
+    Teacher t;
+    t.initializeTeacher(101, "Alice", "Mathematics", "Oxford");
+    t.display();
+
+    Officer o;
+    o.initializeOfficer(102, "Bob", "Senior");
+    o.display();
+
+    Regular r;
+    r.initializeTypist(103, "Charlie", 50);
+    r.display();
+
+    Casual c;
+    c.initializeCasual(104, "David", 40, 200);
+    c.display();
+
+    return 0;
+}
