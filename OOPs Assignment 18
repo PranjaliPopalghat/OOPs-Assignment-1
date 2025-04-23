@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Student {
+private:
+    string name;
+public:
+    Student(string n = "Unknown") {
+        name = n;
+    }
+    void printName() {
+        cout << "Student Name: " << name << endl;
+    }
+};
+int main() {
+    Student student1("Alice");
+    Student student2;
+    Student student3("Bob");
+    student1.printName(); 
+    student2.printName(); 
+    student3.printName(); 
+    return 0;
+}
