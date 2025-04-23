@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+class RBI {
+protected:
+    float minInterestRate = 4.0, minBalance = 1000;
+    int maxWithdrawalLimit = 50000;
+};
+
+class Customer {
+protected:
+    string name;
+    int accountNumber;
+public:
+    void setCustomer(string n, int accNum) { name = n; accountNumber = accNum; }
+};
+
+class Account : public Customer {
+protected:
+    float balance;
+public:
+    void setAccount(float bal) { balance = bal; }
+    void deposit(float amount) { balance += amount; }
+    void withdraw(float amount) { balance = (balance >= amount) ? balance - amount : balance; }
+    float getBalance() { return balance; }
+};
+
+class SBI : public Account, public RBI {
+public:
+    void display() { cout << "SBI Account Balance: Rs." << getBalance() << endl; }
+};
+
+class ICICI : public Account, public RBI {
+public:
+    void display() { cout << "ICICI Account Balance: Rs." << getBalance() << endl; }
+};
+
+class PNB : public Account, public RBI {
+public:
+    void display() { cout << "PNB Account Balance: Rs." << getBalance() << endl; }
+};
+
+int main() {
+    SBI sbi;
+    sbi.setCustomer("Alice", 101);
+    sbi.setAccount(5000);
+    sbi.deposit(2000);
+    sbi.withdraw(1000);
+    sbi.display();
+
+    ICICI icici;
+    icici.setCustomer("Bob", 102);
+    icici.setAccount(8000);
+    icici.deposit(3000);
+    icici.withdraw(500);
+    icici.display();
+
+    PNB pnb;
+    pnb.setCustomer("Charlie", 103);
+    pnb.setAccount(6000);
+    pnb.deposit(2500);
+    pnb.withdraw(2000);
+    pnb.display();
+
+    return 0;
+}
