@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+class RBI {
+protected:
+    float minInterestRate;
+    float minBalance;
+    int maxWithdrawalLimit;
+
+public:
+    RBI() {
+        minInterestRate = 4.0;  
+        minBalance = 1000;      
+        maxWithdrawalLimit = 50000; 
+    }
+
+    void displayGuidelines() {
+        cout << "RBI Guidelines:\n";
+        cout << "Minimum Interest Rate: " << minInterestRate << "%\n";
+        cout << "Minimum Balance Allowed: Rs." << minBalance << "\n";
+        cout << "Maximum Withdrawal Limit: Rs." << maxWithdrawalLimit << endl;
+    }
+};
+class SBI : public RBI {
+private:
+    float sbiInterestRate;
+public:
+    SBI() { sbiInterestRate = 4.5; } 
+    void displayDetails() {
+        displayGuidelines();
+        cout << "SBI Interest Rate: " << sbiInterestRate << "%\n";
+    }
+};
+class ICICI : public RBI {
+private:
+    float iciciInterestRate;
+public:
+    ICICI() { iciciInterestRate = 5.0; } 
+    void displayDetails() {
+        displayGuidelines();
+        cout << "ICICI Interest Rate: " << iciciInterestRate << "%\n";
+    }
+};
+
+class PNB : public RBI {
+private:
+    float pnbInterestRate;
+public:
+    PNB() { pnbInterestRate = 4.25; } 
+    void displayDetails() {
+        displayGuidelines();
+        cout << "PNB Interest Rate: " << pnbInterestRate << "%\n";
+    }
+};
+
+int main() {
+    SBI sbiBank;
+    ICICI iciciBank;
+    PNB pnbBank;
+
+    cout << "\nSBI Bank Details:\n";
+    sbiBank.displayDetails();
+
+    cout << "\nICICI Bank Details:\n";
+    iciciBank.displayDetails();
+
+    cout << "\nPNB Bank Details:\n";
+    pnbBank.displayDetails();
+
+    return 0;
+}
