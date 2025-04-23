@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+class Account {
+protected:
+    string customerName;
+    int accountNumber;
+    string accountType;
+    double balance;
+
+public:
+    void initialize(string name, int accNum, string type, double initialBalance) {
+        customerName = name;
+        accountNumber = accNum;
+        accountType = type;
+        balance = initialBalance;
+    }
+
+    void deposit(double amount) { balance += amount; }
+    void displayBalance() { cout << "Balance: " << balance << endl; }
+};
+
+class SavAcct : public Account {
+public:
+    void computeInterest(double rate) { balance += balance * rate / 100; }
+    void withdraw(double amount) { balance = (amount <= balance) ? balance - amount : balance; }
+};
+
+class CurAcct : public Account {
+private:
+    const double minBalance = 500;
+    const double serviceCharge = 50;
+
+public:
+    void withdraw(double amount) {
+        if (balance - amount < minBalance) balance -= serviceCharge;
+        balance = (amount <= balance) ? balance - amount : balance;
+    }
+};
+
+int main() {
+    SavAcct savings;
+    savings.initialize("Alice", 101, "Savings", 1000);
+    savings.deposit(500);
+    savings.computeInterest(5);
+    savings.withdraw(300);
+    savings.displayBalance();
+
+    CurAcct current;
+    current.initialize("Bob", 102, "Current", 600);
+    current.deposit(400);
+    current.withdraw(700);
+    current.displayBalance();
+
+    return 0;
+}
