@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+class Cinema {
+private:
+    int seats[3]; 
+public:
+    Cinema() { seats[0] = seats[1] = seats[2] = 100; }
+void bookSeats(int show, int numSeats) {
+        if (show < 1 || show > 3) {
+            cout << "Invalid show time!" << endl;
+            return;
+        }
+        if (seats[show - 1] >= numSeats) {
+            seats[show - 1] -= numSeats;
+            cout << "Booking successful! Remaining seats: " << seats[show - 1] << endl;
+        } else {
+            cout << "Not enough seats available!" << endl;
+        }
+    }
+ void displaySeats() {
+        cout << "Available seats:\n";
+        cout << "1pm Show: " << seats[0] << "\n5pm Show: " << seats[1] << "\n8:30pm Show: " << seats[2] << endl;
+    }
+};
+int main() {
+    Cinema cinema;
+    int show, numSeats;
+
+    cout << "Enter show time (1 for 1pm, 2 for 5pm, 3 for 8:30pm): ";
+    cin >> show;
+    cout << "Enter number of seats to book: ";
+    cin >> numSeats;
+    cinema.bookSeats(show, numSeats);
+    cinema.displaySeats();
+
+    return 0;
+}
