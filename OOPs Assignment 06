@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+class DB;
+
+class DM {
+private:
+    float meters, centimeters;
+public:
+    void setData(float m, float cm) { meters = m; centimeters = cm; }
+    void display() { cout << "Distance: " << meters << " meters " << centimeters << " cm" << endl; }
+    friend DM addDistance(const DM&, const DB&);
+};
+
+class DB {
+private:
+    float feet, inches;
+public:
+    void setData(float f, float in) { feet = f; inches = in; }
+    void display() { cout << "Distance: " << feet << " feet " << inches << " inches" << endl; }
+    friend DM addDistance(const DM&, const DB&);
+};
+DM addDistance(const DM& d1, const DB& d2) {
+    DM result;
+    float totalMeters = d1.meters + (d2.feet / 3.281); 
+    float totalCentimeters = d1.centimeters + (d2.inches * 2.54);
+    result.setData(totalMeters, totalCentimeters);
+    return result;
+}
+
+int main() {
+    DM d1;
+    d1.setData(2, 50); // 2 meters 50 cm
+
+    DB d2;
+    d2.setData(5, 10); // 5 feet 10 inches
+
+    DM result = addDistance(d1, d2);
+    result.display();
+
+    return 0;
+}
